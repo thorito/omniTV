@@ -1,0 +1,10 @@
+<resources>
+
+    <style name="Theme.OmniTV" parent="@style/Theme.Leanback">
+        <item name="android:colorPrimary">@color/colorPrimary</item>
+        <item name="android:colorAccent">@color/colorAccent</item>
+        <item name="android:windowAllowReturnTransitionOverlap">true</item>
+        <item name="android:windowAllowEnterTransitionOverlap">true</item>
+    </style>
+
+</resources>

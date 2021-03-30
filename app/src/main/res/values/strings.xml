@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">OmniTV</string>
+    <string name="message_permission_required">Es necesario que acepte los permisos.</string>
+    <string name="err_permissions_overlay">Error para permiso \"Mostrar sobre otras aplicaciones\"</string>
+    <string name="err_permissions_unknown_app_sources">Error obteniendo permiso de \"Fuentes desconocidas\"</string>
+    <string name="title_name">Nombre de usuario</string>
+    <string name="title_description">Introduzca el nombre del usuario a registrar</string>
+    <string name="action_name">Usuario</string>
+    <string name="step1">Paso 1 de 5</string>
+    <string name="action_required">Campo obligatorio</string>
+</resources>
