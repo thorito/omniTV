@@ -2,10 +2,13 @@ package com.sivsa.omnitv.ui.wizard
 
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.view.View
 import androidx.leanback.app.GuidedStepSupportFragment
 import androidx.leanback.widget.GuidanceStylist
 import androidx.leanback.widget.GuidedAction
 import com.sivsa.omnitv.R
+import com.sivsa.omnitv.commons.MyBaseApplication
+import com.sivsa.omnitv.commons.MyGuidedStep
 import com.sivsa.omnitv.models.User
 import com.sivsa.omnitv.tools.TypeToasty
 import com.sivsa.omnitv.tools.toast
@@ -14,7 +17,7 @@ class WizardFragmentChecks(
     private val user: User,
     private val icon: Drawable?,
     private val currentStep: Int,
-    private val totalSteps: Int) : GuidedStepSupportFragment() {
+    private val totalSteps: Int) : MyGuidedStep() {
 
     companion object {
         private const val ID_REMINDERS = 1L
@@ -27,9 +30,9 @@ class WizardFragmentChecks(
         val title = getString(R.string.title_settigs)
         val description = getString(R.string.title_description_settings)
         val step = getString(R.string.step, currentStep, totalSteps)
+
         return GuidanceStylist.Guidance(title, description, step, icon)
     }
-
 
     override fun onCreateActions(actions: MutableList<GuidedAction>, savedInstanceState: Bundle?) {
 
@@ -40,7 +43,7 @@ class WizardFragmentChecks(
                 .id(ID_REMINDERS)
                 .title(R.string.check_subtitles)
                 .description(R.string.description_reminders)
-                .checkSetId(GuidedAction.DEFAULT_CHECK_SET_ID)
+                .checkSetId(GuidedAction.CHECKBOX_CHECK_SET_ID)
                 .checked(false)
                 .build()
         )
@@ -50,7 +53,7 @@ class WizardFragmentChecks(
                 .id(ID_SUBTITLES)
                 .title(R.string.check_subtiles)
                 .description(R.string.description_subtitles)
-                .checkSetId(GuidedAction.DEFAULT_CHECK_SET_ID)
+                .checkSetId(GuidedAction.CHECKBOX_CHECK_SET_ID)
                 .checked(false)
                 .build()
         )
@@ -74,6 +77,27 @@ class WizardFragmentChecks(
                 .checked(false)
                 .build()
         )
+
+        if (!MyBaseApplication.isTVBox) {
+
+            actions.add(
+                GuidedAction.Builder(requireContext())
+                    .id(GuidedAction.ACTION_ID_FINISH)
+                    .title(R.string.action_finish)
+                    .enabled(true)
+                    .clickAction(GuidedAction.ACTION_ID_FINISH)
+                    .build()
+            )
+
+            actions.add(
+                GuidedAction.Builder(requireContext())
+                    .id(GuidedAction.ACTION_ID_CANCEL)
+                    .title(R.string.action_back)
+                    .enabled(true)
+                    .clickAction(GuidedAction.ACTION_ID_CANCEL)
+                    .build()
+            )
+        }
     }
 
     override fun onCreateButtonActions(
@@ -81,21 +105,24 @@ class WizardFragmentChecks(
         savedInstanceState: Bundle?
     ) {
         super.onCreateButtonActions(actions, savedInstanceState)
-        actions.add(
-            GuidedAction.Builder(requireContext())
-                .id(GuidedAction.ACTION_ID_FINISH)
-                .title(R.string.action_finish)
-                .enabled(true)
-                .build()
-        )
 
-        actions.add(
-            GuidedAction.Builder(requireContext())
-                .id(GuidedAction.ACTION_ID_CANCEL)
-                .title(R.string.action_cancelar)
-                .enabled(true)
-                .build()
-        )
+        if (MyBaseApplication.isTVBox) {
+            actions.add(
+                GuidedAction.Builder(requireContext())
+                    .id(GuidedAction.ACTION_ID_FINISH)
+                    .title(R.string.action_finish)
+                    .enabled(true)
+                    .build()
+            )
+
+            actions.add(
+                GuidedAction.Builder(requireContext())
+                    .id(GuidedAction.ACTION_ID_CANCEL)
+                    .title(R.string.action_back)
+                    .enabled(true)
+                    .build()
+            )
+        }
     }
 
 

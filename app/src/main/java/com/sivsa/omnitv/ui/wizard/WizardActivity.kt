@@ -1,16 +1,11 @@
 package com.sivsa.omnitv.ui.wizard
 
 import android.Manifest
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.leanback.app.GuidedStepSupportFragment
 import androidx.lifecycle.lifecycleScope
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.CustomTarget
-import com.bumptech.glide.request.transition.Transition
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
@@ -23,15 +18,15 @@ import com.sivsa.omnitv.tools.TypeToasty
 import com.sivsa.omnitv.tools.toast
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.*
-import kotlin.coroutines.resume
 
 class WizardActivity : FragmentActivity() {
 
     private var hasPermissions: Boolean = false
-
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         pb.visibility = View.VISIBLE
 
         successCheckPermissions {
@@ -57,9 +52,9 @@ class WizardActivity : FragmentActivity() {
             val user = User(
                     name = "Pepito Grillo",
                     login = "pepito@gmail.com",
-//                  thumbPhoto = "https://interactive-examples.mdn.mozilla.net/media/cc0-images/grapefruit-slice-332-332.jpg",
-                    thumbPhoto = "https://lh3.googleusercontent.com/a-/AOh14Gjz7-phqs6gPAdPitE7nfhflsqtkqTj6kvDfiPeHA=s96-c-rg-br100",
-                    provisioning = false)
+                    thumbPhoto = "https://interactive-examples.mdn.mozilla.net/media/cc0-images/grapefruit-slice-332-332.jpg",
+  //                  thumbPhoto = "https://lh3.googleusercontent.com/a-/AOh14Gjz7-phqs6gPAdPitE7nfhflsqtkqTj6kvDfiPeHA=s96-c-rg-br100",
+                    provisioning = true)
 
             val currentStep = 1
             val totalSteps = getTotalStep(user)

@@ -4,23 +4,25 @@ import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.text.InputType
 import android.widget.EditText
-import androidx.leanback.app.GuidedStepSupportFragment
 import androidx.leanback.widget.GuidanceStylist
 import androidx.leanback.widget.GuidedAction
 import androidx.leanback.widget.GuidedActionsStylist
 import androidx.lifecycle.lifecycleScope
 import com.sivsa.omnitv.R
+import com.sivsa.omnitv.commons.MyBaseApplication
+import com.sivsa.omnitv.commons.MyGuidedStep
 import com.sivsa.omnitv.models.User
 import com.sivsa.omnitv.tools.ToolsImage
-import com.sivsa.omnitv.tools.afterTextChanged
+import com.sivsa.omnitv.tools.TypeToasty
 import com.sivsa.omnitv.tools.toast
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class WizardFragmentPasswordUser(
     private val user: User,
         private val icon: Drawable?,
         private val currentStep: Int,
-        private val totalSteps: Int) : GuidedStepSupportFragment() {
+        private val totalSteps: Int) : MyGuidedStep() {
 
     companion object {
         private const val ID = 1L
@@ -47,6 +49,7 @@ class WizardFragmentPasswordUser(
                 if (action.id == ID) {
                     etTitle = vh.editableTitleView
                     etEdit = vh.editableDescriptionView
+
                 } else {
                     super.setupImeOptions(vh, action)
                 }
@@ -69,15 +72,32 @@ class WizardFragmentPasswordUser(
                 .descriptionEditInputType(InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD)
                 .build()
         )
+
+        if (!MyBaseApplication.isTVBox) {
+
+            actions.add(
+                GuidedAction.Builder(requireContext())
+                    .id(GuidedAction.ACTION_ID_NEXT)
+                    .title(R.string.action_next)
+                    .enabled(false)
+                    .clickAction(GuidedAction.ACTION_ID_NEXT)
+                    .build()
+        )
+
+        actions.add(
+                GuidedAction.Builder(requireContext())
+                    .id(GuidedAction.ACTION_ID_CANCEL)
+                    .title(R.string.action_back)
+                    .enabled(true)
+                    .clickAction(GuidedAction.ACTION_ID_CANCEL)
+                    .build()
+            )
+        }
     }
 
     override fun onGuidedActionFocused(action: GuidedAction?) {
-
-        if (action?.id == ID) {
-            etEdit.selectAll()
-        } else {
-            super.onGuidedActionFocused(action)
-        }
+        super.onGuidedActionFocused(action)
+        etEdit.setSelection(0, etEdit.text.length)
     }
 
     override fun onCreateButtonActions(
@@ -85,64 +105,48 @@ class WizardFragmentPasswordUser(
         savedInstanceState: Bundle?
     ) {
         super.onCreateButtonActions(actions, savedInstanceState)
-        actions.add(
-            GuidedAction.Builder(requireContext())
-                .id(GuidedAction.ACTION_ID_CONTINUE)
-                .title(R.string.action_continue)
-                .enabled(false)
-                .build()
-        )
 
-        actions.add(
-            GuidedAction.Builder(requireContext())
-                .id(GuidedAction.ACTION_ID_CANCEL)
-                .title(R.string.action_cancelar)
-                .enabled(true)
-                .build()
-        )
+        if (MyBaseApplication.isTVBox) {
+            actions.add(
+                GuidedAction.Builder(requireContext())
+                    .id(GuidedAction.ACTION_ID_NEXT)
+                    .title(R.string.action_next)
+                    .enabled(false)
+                    .build()
+            )
+
+            actions.add(
+                GuidedAction.Builder(requireContext())
+                    .id(GuidedAction.ACTION_ID_CANCEL)
+                    .title(R.string.action_back)
+                    .enabled(true)
+                    .build()
+            )
+        }
     }
 
     override fun onGuidedActionEditedAndProceed(action: GuidedAction?): Long {
         val result = super.onGuidedActionEditedAndProceed(action)
 
         if (action?.id == ID) {
-            val pos = findButtonActionPositionById(GuidedAction.ACTION_ID_CONTINUE)
-            findButtonActionById(GuidedAction.ACTION_ID_CONTINUE).apply {
-                isEnabled = validateFields()
-                notifyButtonActionChanged(pos)
-            }
+            refreshButtonNext(GuidedAction.ACTION_ID_NEXT)
         }
 
         return result
     }
 
-
-    private fun validateFields(): Boolean {
-        val action = findActionById(ID)
-
-        val pass = action.description
-        return if (pass.isNullOrBlank()) {
-            val messageError = getString(R.string.err_required_password)
-            etTitle.error = messageError
-            false
-        } else {
-            etTitle.error = null
-            true
-        }
-    }
-
     override fun onGuidedActionClicked(action: GuidedAction?) {
 
         when (action?.id) {
-            GuidedAction.ACTION_ID_CONTINUE -> {
+            GuidedAction.ACTION_ID_NEXT -> {
                 if (validateFields()) {
                     lifecycleScope.launch {
                         user.password = findActionById(ID).description.toString()
                         val icon = ToolsImage(requireContext())
-                            .getDrawableIcon(
-                                iconDefault = R.drawable.ic_devices,
-                                urlImage = "https://images-na.ssl-images-amazon.com/images/I/31vi9UxCd%2BL._AC_.jpg"
-                            )
+                                .getDrawableIcon(
+                                        iconDefault = R.drawable.ic_devices,
+                                        urlImage = "https://images-na.ssl-images-amazon.com/images/I/31vi9UxCd%2BL._AC_.jpg"
+                                )
 
                         add(fragmentManager, WizardFragmentAlias(user, icon, currentStep + 1, totalSteps))
                     }
@@ -150,6 +154,36 @@ class WizardFragmentPasswordUser(
             }
             GuidedAction.ACTION_ID_CANCEL -> fragmentManager?.popBackStack()
             else -> super.onGuidedActionClicked(action)
+        }
+    }
+
+    private fun validateFields(): Boolean {
+        val action = findActionById(ID)
+
+        val pass = action?.description
+        return if (pass.isNullOrBlank()) {
+            val messageError = getString(R.string.err_required_password)
+            etTitle.error = messageError
+            toast(messageError, type = TypeToasty.ERROR)
+            false
+        } else {
+            etTitle.error = null
+            true
+        }
+    }
+
+    private fun refreshButtonNext(id: Long) {
+        val (guidedAction, pos) = getAction(id)
+        guidedAction.apply {
+            isEnabled = validateFields()
+            lifecycleScope.launch {
+                delay(500)
+                if (MyBaseApplication.isTVBox) {
+                    notifyButtonActionChanged(pos)
+                } else {
+                    notifyActionChanged(pos)
+                }
+            }
         }
     }
 }
