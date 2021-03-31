@@ -1,17 +1,29 @@
 package com.sivsa.omnitv.ui.wizard
 
 import android.Manifest
+import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.leanback.app.GuidedStepSupportFragment
+import androidx.lifecycle.lifecycleScope
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.sivsa.omnitv.R
+import com.sivsa.omnitv.models.User
+import com.sivsa.omnitv.tools.ToolsImage
 import com.sivsa.omnitv.tools.TypeToasty
 import com.sivsa.omnitv.tools.toast
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.*
+import kotlin.coroutines.resume
 
 class WizardActivity : FragmentActivity() {
 
@@ -20,27 +32,53 @@ class WizardActivity : FragmentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        pb.visibility = View.VISIBLE
 
         successCheckPermissions {
-            initWizardFragment()
+            initWizardFragmentUserName()
         }
     }
 
     override fun onBackPressed() {
         val currentFragment = GuidedStepSupportFragment.getCurrentGuidedStepSupportFragment(supportFragmentManager)
-        if (currentFragment is WizardFragment1) {
+        if (currentFragment is WizardFragmentUserName) {
             finish()
         } else {
             super.onBackPressed()
         }
     }
 
-    private fun initWizardFragment() {
-        window.setBackgroundDrawableResource(R.drawable.wizard_background_blackned)
+    private fun initWizardFragmentUserName() {
 
-        val fragment = WizardFragment1()
-        fragment.arguments = intent.extras
-        GuidedStepSupportFragment.addAsRoot(this, fragment, android.R.id.content)
+        lifecycleScope.launch(Dispatchers.Main) {
+
+            window.setBackgroundDrawableResource(R.drawable.bg_provisioning)
+
+            val user = User(
+                    name = "Pepito Grillo",
+                    login = "pepito@gmail.com",
+//                  thumbPhoto = "https://interactive-examples.mdn.mozilla.net/media/cc0-images/grapefruit-slice-332-332.jpg",
+                    thumbPhoto = "https://lh3.googleusercontent.com/a-/AOh14Gjz7-phqs6gPAdPitE7nfhflsqtkqTj6kvDfiPeHA=s96-c-rg-br100",
+                    provisioning = true)
+
+            val currentStep = 1
+            val totalSteps = getTotalStep(user)
+            val icon = ToolsImage(this@WizardActivity)
+                .getDrawableIcon(iconDefault = R.drawable.ic_user, user.thumbPhoto)
+            val fragment = WizardFragmentUserName(user, icon, currentStep, totalSteps)
+            GuidedStepSupportFragment.addAsRoot(this@WizardActivity, fragment, android.R.id.content)
+
+        }
+    }
+
+    private fun getTotalStep(user: User): Int {
+
+        // Simulo el número total de pasos (si fuese nuevo usuario -> +1)
+        return if (user.provisioning) {
+            4
+        } else {
+            3
+        }
     }
 
     private fun successCheckPermissions(callbackSuccess: () -> Unit) {
@@ -86,6 +124,7 @@ class WizardActivity : FragmentActivity() {
         callbackSuccess: () -> Unit
     ) {
         if (report.areAllPermissionsGranted()) {
+            pb.visibility = View.GONE
             callbackSuccess()
         } else {
             hasPermissions = false

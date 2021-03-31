@@ -8,8 +8,14 @@ import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import android.telephony.TelephonyManager
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
+import android.view.View
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import android.widget.Toast
+import com.sivsa.omnitv.commons.MyBaseApplication
 import es.dmoral.toasty.Toasty
 import java.util.*
 
@@ -67,6 +73,14 @@ enum class TypeToasty {
     SUCCESS, ERROR, INFO, WARNING
 }
 
+fun toast(
+    value_message: Any?,
+    duration: Int = Toast.LENGTH_LONG,
+    type: TypeToasty = TypeToasty.INFO
+) {
+    val ctx = MyBaseApplication.instance.applicationContext
+    ctx.toast(value_message = value_message, duration = duration, type = type)
+}
 fun Context.toast(
     value_message: Any?,
     duration: Int = Toast.LENGTH_LONG,
@@ -101,7 +115,35 @@ fun uiThread(f: () -> Unit) {
     }
 }
 
+fun isPortraitOrientation(configuration: Configuration) =
+    configuration.orientation == Configuration.ORIENTATION_PORTRAIT
+
 private object ContextHelper {
     val handler = Handler(Looper.getMainLooper())
     val uiThread = Looper.getMainLooper().thread
+}
+
+fun EditText.afterTextChanged(callback: (String) -> Unit) {
+    this.addTextChangedListener(object : TextWatcher {
+
+        override fun afterTextChanged(editable: Editable?) {
+            callback(editable.toString())
+        }
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            /**
+             * No se utiliza. La funcion se creó para simplificar el código
+             */
+        }
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            /**
+             * No se utiliza. La método se creó para simplificar el código
+             */
+        }
+    })
+}
+
+fun View.hideKeyboard() {
+    val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    imm.hideSoftInputFromWindow(windowToken, 0)
 }

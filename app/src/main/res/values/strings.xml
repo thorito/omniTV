@@ -3,9 +3,41 @@
     <string name="message_permission_required">Es necesario que acepte los permisos.</string>
     <string name="err_permissions_overlay">Error para permiso \"Mostrar sobre otras aplicaciones\"</string>
     <string name="err_permissions_unknown_app_sources">Error obteniendo permiso de \"Fuentes desconocidas\"</string>
-    <string name="title_name">Nombre de usuario</string>
-    <string name="title_description">Introduzca el nombre del usuario a registrar</string>
-    <string name="action_name">Usuario</string>
-    <string name="step1">Paso 1 de 5</string>
+
+    <string name="title_name">Usuario</string>
+    <string name="title_description_name">Introduzca el nombre del usuario a registrar</string>
+    <string name="action_name">Usuario (Campo obligatorio)</string>
+    <string name="err_required_name">Debe rellenar el nombre</string>
+
+    <string name="title_password">Contraseña</string>
+    <string name="title_description_password">Introduzca la contraseña del usuario a registrar</string>
+    <string name="action_password">Contraseña (Campo obligatorio)</string>
+    <string name="err_required_password">Debe rellenar la contraseña</string>
+
+    <string name="title_alias">Dispositivo</string>
+    <string name="title_description_alias">Introduzca el nombre del dispositivo</string>
+    <string name="action_alias">Alias (Campo obligatorio)</string>
+    <string name="err_required_alias">Debe rellenar el nombre del dispositivo</string>
+
+    <string name="step">Paso %1$d de %2$d</string>
     <string name="action_required">Campo obligatorio</string>
+
+    <string name="action_continue">Continuar</string>
+    <string name="action_finish">Finalizar</string>
+    <string name="action_cancelar">Cancelar</string>
+
+    <string name="type_alias">%1$s %2$s</string>
+    <string name="type_mobile">Móvil de</string>
+    <string name="type_tvbox">TVBox de</string>
+    <string name="title_settigs">Configuración</string>
+    <string name="title_description_settings">Parámetros de personalización</string>
+    <string name="check_subtitles">Recordatorios</string>
+    <string name="description_reminders">Recibir recordatorios</string>
+    <string name="check_subtiles">Subtítulos</string>
+    <string name="description_subtitles">Permitir subtítulos (si dispone el canal de TV)</string>
+    <string name="check_lse">Lengua de signos</string>
+    <string name="description_lse">Información adaptada</string>
+    <string name="check_album">Álbum inicial</string>
+    <string name="description_album">Crear álbum inicial para disponer de galería de fotos</string>
+    <string name="registration_completed">Registro completado</string>
 </resources>

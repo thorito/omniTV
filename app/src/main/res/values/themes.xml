@@ -1,8 +1,16 @@
 <resources>
 
-    <style name="Theme.OmniTV" parent="@style/Theme.Leanback">
+    <style name="Theme.OmniTV" parent="Theme.AppCompat.DayNight.NoActionBar">
         <item name="android:colorPrimary">@color/colorPrimary</item>
         <item name="android:colorAccent">@color/colorAccent</item>
+        <item name="android:windowNoTitle">true</item>
+
+        <item name="android:windowContentTransitions">true</item>
+        <item name="android:windowAllowEnterTransitionOverlap">false</item>
+        <item name="android:windowAllowReturnTransitionOverlap">false</item>
+    </style>
+
+    <style name="Theme.Leanback" parent="Theme.AppCompat.Leanback">
         <item name="android:windowAllowReturnTransitionOverlap">true</item>
         <item name="android:windowAllowEnterTransitionOverlap">true</item>
     </style>
