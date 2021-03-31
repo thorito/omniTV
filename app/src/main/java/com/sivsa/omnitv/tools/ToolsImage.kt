@@ -16,10 +16,11 @@ class ToolsImage(private val context: Context) {
     suspend fun getDrawableIcon(@DrawableRes iconDefault: Int,
                                 urlImage: String? = null): Drawable? = suspendCancellableCoroutine { c ->
 
+        val ctx = context.applicationContext
         if (urlImage.isNullOrBlank()) {
-            c.resume(ContextCompat.getDrawable(context, iconDefault))
+            c.resume(ContextCompat.getDrawable(ctx, iconDefault))
         } else {
-            Glide.with(context)
+            Glide.with(ctx)
                 .asDrawable()
                 .load(urlImage)
                 .apply(RequestOptions().override(250, 250))

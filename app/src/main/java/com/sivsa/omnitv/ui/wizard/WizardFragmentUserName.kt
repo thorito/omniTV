@@ -14,6 +14,7 @@ import com.sivsa.omnitv.commons.MyBaseApplication
 import com.sivsa.omnitv.models.User
 import com.sivsa.omnitv.tools.ToolsImage
 import com.sivsa.omnitv.tools.afterTextChanged
+import com.sivsa.omnitv.tools.isPortraitOrientation
 import kotlinx.coroutines.launch
 
 class WizardFragmentUserName(

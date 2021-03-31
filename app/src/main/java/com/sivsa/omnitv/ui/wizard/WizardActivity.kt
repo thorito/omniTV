@@ -59,7 +59,7 @@ class WizardActivity : FragmentActivity() {
                     login = "pepito@gmail.com",
 //                  thumbPhoto = "https://interactive-examples.mdn.mozilla.net/media/cc0-images/grapefruit-slice-332-332.jpg",
                     thumbPhoto = "https://lh3.googleusercontent.com/a-/AOh14Gjz7-phqs6gPAdPitE7nfhflsqtkqTj6kvDfiPeHA=s96-c-rg-br100",
-                    provisioning = true)
+                    provisioning = false)
 
             val currentStep = 1
             val totalSteps = getTotalStep(user)

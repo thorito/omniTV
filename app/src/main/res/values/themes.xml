@@ -10,9 +10,21 @@
         <item name="android:windowAllowReturnTransitionOverlap">false</item>
     </style>
 
-    <style name="Theme.Leanback" parent="Theme.AppCompat.Leanback">
+    <style name="Theme.Leanback.Guide" parent="Theme.AppCompat.Leanback.GuidedStep">
         <item name="android:windowAllowReturnTransitionOverlap">true</item>
         <item name="android:windowAllowEnterTransitionOverlap">true</item>
     </style>
 
+    <style name="Theme.Leanback.Guide.Mobile" parent="Theme.AppCompat.Leanback.GuidedStepBase">
+        <item name="guidedStepThemeFlag">false</item>
+        <item name="guidanceContainerStyle">@style/Theme.Leanback.Guide.Mobile.GuidanceContainerStyle</item>
+    </style>
+
+    <style name="Theme.Leanback.Guide.Mobile.GuidanceContainerStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:paddingStart">16dp</item>
+        <item name="android:paddingEnd">16dp</item>
+        <item name="android:clipToPadding">false</item>
+    </style>
 </resources>
