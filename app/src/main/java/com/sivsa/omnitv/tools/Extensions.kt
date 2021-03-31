@@ -50,7 +50,7 @@ fun isPhone(context: Context): Boolean {
     val telephonyManager = context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
     telephonyManager.let {
         when (it.phoneType) {
-            TelephonyManager.PHONE_TYPE_CDMA -> Log.d("isPhone","Is CDMA")
+            TelephonyManager.PHONE_TYPE_CDMA -> Log.d("isPhone", "Is CDMA")
             TelephonyManager.PHONE_TYPE_GSM -> Log.d("isPhone", "Is GSM")
             TelephonyManager.PHONE_TYPE_SIP -> Log.d("isPhone", "Is SIP")
             else -> {
@@ -74,17 +74,17 @@ enum class TypeToasty {
 }
 
 fun toast(
-    value_message: Any?,
-    duration: Int = Toast.LENGTH_LONG,
-    type: TypeToasty = TypeToasty.INFO
+        value_message: Any?,
+        duration: Int = Toast.LENGTH_LONG,
+        type: TypeToasty = TypeToasty.INFO
 ) {
     val ctx = MyBaseApplication.instance.applicationContext
     ctx.toast(value_message = value_message, duration = duration, type = type)
 }
 fun Context.toast(
-    value_message: Any?,
-    duration: Int = Toast.LENGTH_LONG,
-    type: TypeToasty = TypeToasty.INFO
+        value_message: Any?,
+        duration: Int = Toast.LENGTH_LONG,
+        type: TypeToasty = TypeToasty.INFO
 ) {
     var message: CharSequence? = null
 
@@ -116,7 +116,15 @@ fun uiThread(f: () -> Unit) {
 }
 
 fun isPortraitOrientation(configuration: Configuration) =
-    configuration.orientation == Configuration.ORIENTATION_PORTRAIT
+    configuration.orientation == Configuration.ORIENTATION_PORTRAIT &&
+            !isTablet()
+
+fun isTablet(): Boolean {
+    val context = MyBaseApplication.instance.applicationContext
+    val xlarge = context.resources.configuration.screenLayout and Configuration.SCREENLAYOUT_SIZE_MASK == 4
+    val large = context.resources.configuration.screenLayout and Configuration.SCREENLAYOUT_SIZE_MASK == Configuration.SCREENLAYOUT_SIZE_LARGE
+    return xlarge || large
+}
 
 private object ContextHelper {
     val handler = Handler(Looper.getMainLooper())
@@ -129,6 +137,7 @@ fun EditText.afterTextChanged(callback: (String) -> Unit) {
         override fun afterTextChanged(editable: Editable?) {
             callback(editable.toString())
         }
+
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             /**
              * No se utiliza. La funcion se creó para simplificar el código

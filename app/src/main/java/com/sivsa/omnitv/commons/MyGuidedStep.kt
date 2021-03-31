@@ -13,13 +13,17 @@ open class MyGuidedStep: GuidedStepSupportFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        container = view.findViewById(androidx.leanback.R.id.content_fragment)
-        container?.setLeftPanelGuidedStep(resources.configuration)
+        if (!MyBaseApplication.isTVBox) {
+            container = view.findViewById(androidx.leanback.R.id.content_fragment)
+            container?.setLeftPanelGuidedStep(resources.configuration)
+        }
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
-        container?.setLeftPanelGuidedStep(newConfig)
+        if (!MyBaseApplication.isTVBox) {
+            container?.setLeftPanelGuidedStep(newConfig)
+        }
     }
 
     fun getAction(id: Long): Pair<GuidedAction, Int> =
