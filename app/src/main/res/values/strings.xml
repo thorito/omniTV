@@ -22,10 +22,10 @@
     <string name="step">Paso %1$d de %2$d</string>
     <string name="action_required">Campo obligatorio</string>
 
-    <string name="action_next">SIGUIENTE</string>
-    <string name="action_finish">FINALIZAR</string>
-    <string name="action_cancelar">CANCELAR</string>
-    <string name="action_back">ATRÁS</string>
+    <string name="action_next">Siguiente</string>
+    <string name="action_finish">Finalizar</string>
+    <string name="action_cancel">Cancelar</string>
+    <string name="action_back">Atrás</string>
 
     <string name="type_alias">%1$s %2$s</string>
     <string name="type_mobile">Móvil de</string>

@@ -95,7 +95,7 @@ class WizardFragmentUserName(
             actions.add(
                 GuidedAction.Builder(requireContext())
                     .id(GuidedAction.ACTION_ID_CANCEL)
-                    .title(R.string.action_back)
+                    .title(R.string.action_cancel)
                     .enabled(true)
                     .clickAction(GuidedAction.ACTION_ID_CANCEL)
                     .build()
@@ -127,7 +127,7 @@ class WizardFragmentUserName(
             actions.add(
                     GuidedAction.Builder(requireContext())
                             .id(GuidedAction.ACTION_ID_CANCEL)
-                            .title(R.string.action_back)
+                            .title(R.string.action_cancel)
                             .enabled(true)
                             .build()
             )
