@@ -156,7 +156,9 @@ class WizardFragmentAlias(
                     if (validateFields() || editTemporal.isNullOrBlank()) {
 
                         val icon = ToolsImage(requireContext())
-                                .getDrawableIcon(iconDefault = R.drawable.ic_settings)
+                                .getDrawableIcon(
+                                    iconDefault = R.drawable.ic_settings,
+                                    urlImage = "https://tusejemplos.com/wp-content/uploads/2015/11/preferencias-del-sistema.png")
 
                         add(fragmentManager, WizardFragmentChecks(user, icon, currentStep + 1, totalSteps))
                     }

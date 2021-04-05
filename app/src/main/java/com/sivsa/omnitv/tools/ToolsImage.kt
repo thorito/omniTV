@@ -17,24 +17,27 @@ class ToolsImage(private val context: Context) {
                                 urlImage: String? = null): Drawable? = suspendCancellableCoroutine { c ->
 
         val ctx = context.applicationContext
-        if (urlImage.isNullOrBlank()) {
-            c.resume(ContextCompat.getDrawable(ctx, iconDefault))
-        } else {
-            Glide.with(ctx)
-                .asDrawable()
-                .load(urlImage)
-                .apply(RequestOptions().override(250, 250))
-                .circleCrop()
-                .placeholder(iconDefault)
-                .into(object: CustomTarget<Drawable>() {
-                    override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>?) {
-                        c.resume(resource)
-                    }
 
-                    override fun onLoadCleared(placeholder: Drawable?) {
-                        c.resume(placeholder)
-                    }
-                })
+        val source = if (urlImage.isNullOrBlank()) {
+            iconDefault
+        } else {
+            urlImage
         }
+
+        Glide.with(ctx)
+            .asDrawable()
+            .load(source)
+            .apply(RequestOptions().override(250, 250))
+            .circleCrop()
+            .placeholder(iconDefault)
+            .into(object: CustomTarget<Drawable>() {
+                override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>?) {
+                    c.resume(resource)
+                }
+
+                override fun onLoadCleared(placeholder: Drawable?) {
+                    c.resume(placeholder)
+                }
+            })
     }
 }

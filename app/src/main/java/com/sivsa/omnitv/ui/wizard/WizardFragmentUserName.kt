@@ -88,7 +88,6 @@ class WizardFragmentUserName(
                     .id(GuidedAction.ACTION_ID_NEXT)
                     .title(R.string.action_next)
                     .enabled(false)
-                    .clickAction(GuidedAction.ACTION_ID_NEXT)
                     .build()
             )
 
@@ -97,7 +96,6 @@ class WizardFragmentUserName(
                     .id(GuidedAction.ACTION_ID_CANCEL)
                     .title(R.string.action_cancel)
                     .enabled(true)
-                    .clickAction(GuidedAction.ACTION_ID_CANCEL)
                     .build()
             )
         }
