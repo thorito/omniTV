@@ -80,7 +80,6 @@ class WizardFragmentPasswordUser(
                     .id(GuidedAction.ACTION_ID_NEXT)
                     .title(R.string.action_next)
                     .enabled(false)
-                    .clickAction(GuidedAction.ACTION_ID_NEXT)
                     .build()
         )
 
@@ -89,7 +88,6 @@ class WizardFragmentPasswordUser(
                     .id(GuidedAction.ACTION_ID_CANCEL)
                     .title(R.string.action_back)
                     .enabled(true)
-                    .clickAction(GuidedAction.ACTION_ID_CANCEL)
                     .build()
             )
         }

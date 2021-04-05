@@ -85,7 +85,6 @@ class WizardFragmentChecks(
                     .id(GuidedAction.ACTION_ID_FINISH)
                     .title(R.string.action_finish)
                     .enabled(true)
-                    .clickAction(GuidedAction.ACTION_ID_FINISH)
                     .build()
             )
 
@@ -94,7 +93,6 @@ class WizardFragmentChecks(
                     .id(GuidedAction.ACTION_ID_CANCEL)
                     .title(R.string.action_back)
                     .enabled(true)
-                    .clickAction(GuidedAction.ACTION_ID_CANCEL)
                     .build()
             )
         }
