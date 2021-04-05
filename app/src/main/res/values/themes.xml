@@ -13,18 +13,52 @@
     <style name="Theme.Leanback.Guide" parent="Theme.AppCompat.Leanback.GuidedStep">
         <item name="android:windowAllowReturnTransitionOverlap">true</item>
         <item name="android:windowAllowEnterTransitionOverlap">true</item>
+
+        <!--<item name="guidedStepBackground">@android:color/transparent</item>-->
+
+        <item name="guidanceTitleStyle">@style/MyGuidanceTitleStyle</item>
+        <item name="guidanceBreadcrumbStyle">@style/MyGuidanceBreadcrumbStyle</item>
+        <item name="guidanceDescriptionStyle">@style/MyGuidanceDescriptionStyle</item>
+
+        <item name="guidedActionItemTitleStyle">@style/MyGuidedActionItemTitleStyle</item>
+        <item name="guidedActionItemDescriptionStyle">@style/MyGuidedActionItemDescriptionStyle</item>
+
+        <item name="guidedActionsBackground">@color/lb_guidedactions_background</item>
+        <item name="guidedActionsSelectorDrawable">@drawable/ripple_selector</item>
+        <item name="android:foreground">?attr/guidedActionsSelectorDrawable</item>
     </style>
 
-    <style name="Theme.Leanback.Guide.Mobile" parent="Theme.AppCompat.Leanback.GuidedStepBase">
-        <item name="guidedStepThemeFlag">false</item>
-        <item name="guidanceContainerStyle">@style/Theme.Leanback.Guide.Mobile.GuidanceContainerStyle</item>
+    <style name="MyGuidanceTitleStyle" parent="Widget.Leanback.GuidanceTitleStyle">
+        <item name="android:ellipsize">start</item>
+        <item name="android:maxLines">3</item>
+        <item name="android:textColor">#FFEB3B</item>
+        <item name="android:textSize">18sp</item>
     </style>
 
-    <style name="Theme.Leanback.Guide.Mobile.GuidanceContainerStyle">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:paddingStart">16dp</item>
-        <item name="android:paddingEnd">16dp</item>
-        <item name="android:clipToPadding">false</item>
+    <style name="MyGuidanceBreadcrumbStyle" parent="Widget.Leanback.GuidanceBreadcrumbStyle">
+        <item name="android:textColor">#F44336</item>
+        <item name="android:textSize">14sp</item>
     </style>
+
+    <style name="MyGuidanceDescriptionStyle" parent="Widget.Leanback.GuidanceDescriptionStyle">
+        <item name="android:textColor">#03A9F4</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="MyGuidedActionItemTitleStyle" parent="Widget.Leanback.GuidedActionItemTitleStyle">
+        <item name="android:alpha">@dimen/lb_guidedactions_item_unselected_text_alpha</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:maxLines">@integer/lb_guidedactions_item_title_min_lines</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textSize">@dimen/lb_guidedactions_item_title_font_size</item>
+    </style>
+
+    <style name="MyGuidedActionItemDescriptionStyle" parent="Widget.Leanback.GuidedActionItemDescriptionStyle">
+        <item name="android:alpha">@dimen/lb_guidedactions_item_unselected_description_text_alpha</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:maxLines">@integer/lb_guidedactions_item_description_min_lines</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textSize">@dimen/lb_guidedactions_item_description_font_size</item>
+    </style>
+
 </resources>

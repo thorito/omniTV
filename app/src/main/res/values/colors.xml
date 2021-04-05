@@ -7,6 +7,7 @@
     <color name="blue">#0C8AB7</color>
     <color name="blue_light">#5ABAE9</color>
 
-    <color name="background_gradient_end">#FFEE00</color>
-    <color name="background_gradient_start">#00EE00</color>
+    <color name="colorAccentAlpha">#A303B0FF</color>
+
+    <color name="lb_guidedactions_background">#FF111111</color>
 </resources>
